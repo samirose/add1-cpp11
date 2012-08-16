@@ -30,15 +30,18 @@
 #include <algorithm>
 #include <iterator>
 
-template<class ForwardIterator, class Size, class T>
-void replace_n(ForwardIterator first, ForwardIterator last,
+template<class RandomAccessIterator, class Size, class T>
+void replace_n(RandomAccessIterator first, RandomAccessIterator last,
                Size n, const T& value, const T& new_value)
 {
-    for (; first != last; ++first) {
-        if (*first == value) {
+    while ((first = std::find(first, last, value)) != last && n > 0) {
+        if (n < last-first) {
             *first = new_value;
-            if (--n == 0)
-                break;
+            --n;
+        }
+        else {
+            std::replace(first, last, value, new_value);
+            return;
         }
     }
 }
@@ -47,7 +50,7 @@ int* add1(int* arr, std::size_t sz, int val, int n)
 {
     int* const begin = arr;
     int* const end = arr+sz;
-    if (n == 0 || std::abs(n) >= sz) {
+    if (n == 0) {
         std::replace(begin, end, val, val+1);
     }
     else if (n > 0) {
