@@ -12,6 +12,7 @@
 #include <iostream>
 #include <iterator>
 #include <algorithm>
+#include <vector>
 
 int* add1(int* arr, std::size_t sz, int val, int n);
 
@@ -158,6 +159,36 @@ void test_algorithm_does_not_over_or_undeflow_arr()
     assert_equal(fullarr, (int[]){6, 7, 7, 6});
 }
 
+std::vector<int> generate_test_vector(std::size_t sz)
+{
+    std::vector<int> v;
+    while (sz-- > 0) {
+        v.push_back(std::rand()%11);
+    }
+    return v;
+}
+
+void test_with_random_input()
+{
+    std::srand((unsigned int)std::time(NULL));
+    for (int round = 1; round <= 100; ++round) {
+        std::vector<int> arr = generate_test_vector(std::rand()%100+1);
+        const std::vector<int> ref_arr(arr);
+        const std::size_t sz = arr.size();
+        for (int n = -(int(sz)+1); n <= int(sz)+1; ++n, arr = ref_arr) {
+            int val = *std::max_element(arr.begin(), arr.end()) + 1;
+            int* res = add1(arr.data(), sz, val, n);
+            assert(std::equal(ref_arr.data(), ref_arr.data()+sz, res));
+            val = *std::min_element(arr.begin(), arr.end()) - 1;
+            res = add1(arr.data(), sz, val, n);
+            assert(std::equal(ref_arr.data(), ref_arr.data()+sz, res));
+            val = arr[1];
+            res = add1(arr.data(), sz, val, n);
+            test_general_properties_of_add1(arr.data(), res, sz, val, n);
+        }
+    }
+}
+
 int main(int argc, const char * argv[])
 {
     test_arr_not_modified_when_sz_is_zero();
@@ -165,6 +196,7 @@ int main(int argc, const char * argv[])
     test_replace_all();
     test_replace_n();
     test_algorithm_does_not_over_or_undeflow_arr();
+    test_with_random_input();
     std::cout << "All tests passed" << std::endl;
     return 0;
 }
