@@ -11,6 +11,7 @@
 #include <cstdlib>
 #include <iostream>
 #include <iterator>
+#include <algorithm>
 
 int* add1(int* arr, std::size_t sz, int val, int n);
 
@@ -24,16 +25,14 @@ void print_array(const int* arr, std::size_t sz)
 }
 
 bool equal(const int* res, const int* expected, std::size_t sz) {
-    if (!std::equal(res, res+sz, expected)) {
-        std::cout << "Expected: ";
-        print_array(expected, sz);
-        std::cout << ", but got ";
-        print_array(res, sz);
-        std::cout << std::endl;
-        return false;
-    }
-    else
+    if (std::equal(res, res+sz, expected))
         return true;
+    std::cout << "Expected: ";
+    print_array(expected, sz);
+    std::cout << ", but got ";
+    print_array(res, sz);
+    std::cout << std::endl;
+    return false;
 }
 
 template<std::size_t N>
@@ -46,13 +45,15 @@ void test_general_properties_of_add1(int* arr, int* res, std::size_t sz, int val
 {
     // The algorithm modifies the array in-place
     assert(res == arr);
+    int* const begin = res;
+    int* const end = res+sz;
     if (n == 0 || std::abs(n) >= sz) {
         // There should be no values equal to val left in the array
-        assert(std::count(arr, arr+sz, val) == 0);
+        assert(std::count(begin, end, val) == 0);
     }
     else {
         // There should at most sz-abs(n) values equal to val left in the result array
-        assert(std::count(arr, arr+sz, val) <= sz - std::abs(n));
+        assert(std::count(begin, end, val) <= sz - std::abs(n));
     }
 }
 

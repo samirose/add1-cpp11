@@ -26,7 +26,6 @@
 // return: arr with proper values incremented
 
 #include <cstddef>
-#include <cstdlib>
 #include <algorithm>
 #include <iterator>
 
