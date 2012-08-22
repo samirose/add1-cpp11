@@ -5,7 +5,11 @@
 //  Created by Sami Rosendahl on 2.8.2012.
 //  Copyright (c) 2012 Sami Rosendahl. All rights reserved.
 //
+// Tests for the Array Iteration Interview Problem solution in C++11
+// See http://blog.jazzychad.net/2012/08/01/array-iteration-problem.html
+//
 
+#include "add1.h"
 #include <cassert>
 #include <cstddef>
 #include <cstdlib>
@@ -13,8 +17,6 @@
 #include <iterator>
 #include <algorithm>
 #include <vector>
-
-int* add1(int* arr, std::size_t sz, int val, int n);
 
 void print_array(const int* arr, std::size_t sz)
 {

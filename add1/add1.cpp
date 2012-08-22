@@ -9,22 +9,7 @@
 // See http://blog.jazzychad.net/2012/08/01/array-iteration-problem.html
 //
 
-// add1 - increments items in an array matching specified value
-//
-// param: arr - array of integers to manipulate
-// param: sz  - number of elements in arr
-// param: val - integer, value to increment
-// param: n   - integer, control value specifying behavior of manipulation
-//   n == 0 means increment all occurrences of val
-//
-//   n > 0  means increment up to n occurrences of val
-//          from left-to-right (forward)
-//
-//   n < 0  means increment up to n occurrences of val
-//          from right-to-left (backward)
-//
-// return: arr with proper values incremented
-
+#include "add1.h"
 #include <cstddef>
 #include <algorithm>
 #include <iterator>
