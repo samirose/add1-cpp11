@@ -21,11 +21,8 @@ namespace {
                    Size n, const T& value, const T& new_value)
     {
         while ((first = std::find(first, last, value)) != last && n > 0) {
-            if (n < last-first) {
-                *first = new_value;
-                --n;
-            }
-            else {
+            *first = new_value;
+            if (--n >= last-first) {
                 std::replace(first, last, value, new_value);
                 return;
             }
