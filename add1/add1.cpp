@@ -32,16 +32,14 @@ void replace_n(RandomAccessIterator first, RandomAccessIterator last,
 
 int* add1(int* arr, std::size_t sz, int val, int n)
 {
-    int* const begin = arr;
-    int* const end = arr+sz;
     if (n == 0) {
-        std::replace(begin, end, val, val+1);
+        std::replace(arr, arr+sz, val, val+1);
     }
     else if (n > 0) {
-        replace_n(begin, end, n, val, val+1);
+        replace_n(arr, arr+sz, n, val, val+1);
     }
     else if (n < 0) {
-        replace_n(std::reverse_iterator<int*>(end), std::reverse_iterator<int*>(begin), -n, val, val+1);
+        replace_n(std::reverse_iterator<int*>(arr+sz), std::reverse_iterator<int*>(arr), -n, val, val+1);
     }
     return arr;
 }
