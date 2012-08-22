@@ -14,20 +14,24 @@
 #include <algorithm>
 #include <iterator>
 
-template<class RandomAccessIterator, class Size, class T>
-void replace_n(RandomAccessIterator first, RandomAccessIterator last,
-               Size n, const T& value, const T& new_value)
-{
-    while ((first = std::find(first, last, value)) != last && n > 0) {
-        if (n < last-first) {
-            *first = new_value;
-            --n;
-        }
-        else {
-            std::replace(first, last, value, new_value);
-            return;
+namespace {
+
+    template<class RandomAccessIterator, class Size, class T>
+    void replace_n(RandomAccessIterator first, RandomAccessIterator last,
+                   Size n, const T& value, const T& new_value)
+    {
+        while ((first = std::find(first, last, value)) != last && n > 0) {
+            if (n < last-first) {
+                *first = new_value;
+                --n;
+            }
+            else {
+                std::replace(first, last, value, new_value);
+                return;
+            }
         }
     }
+
 }
 
 int* add1(int* arr, std::size_t sz, int val, int n)
